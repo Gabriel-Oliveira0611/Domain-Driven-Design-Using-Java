@@ -2,13 +2,14 @@ package br.com.fiap.loja.model;
 
 public class Produto {
 
-    //Criação dos atributos da classe
-    public String nomeProduto;
-    public int quantidadeProduto;
-    public double precoProduto;
+    // Declaração das variáveis
+    public String nome;
+    public int quantidade;
+    public double precoUnitario;
 
-    //Criação do método
-    public double calcularPrecoTotalProduto(){
-        return precoProduto * quantidadeProduto;
+    // Criação do método
+    public double calcularPrecoTotal() {
+        return quantidade * precoUnitario;
     }
+
 }
