@@ -24,20 +24,19 @@ public class Terminal {
 
         // Atribuição dos dados ao produto
         p.nome = nome;
-        p.quantidade = quantidade;
         p.precoUnitario = precoUnitario;
 
         // Execução do método
-        double precoTotal = p.calcularPrecoTotal();
+        double precoTotal = p.calcularPrecoTotal(quantidade);
 
         // Exibição dos dados
         System.out.println("Segue resumo abaixo:");
         System.out.println("_______________________");
-        System.out.println("Nome do produto: " + nome);
+        System.out.println("Nome do produto: " + p.nome);
         System.out.println("_______________________");
         System.out.println("Quantidade solicitada: " + quantidade);
         System.out.println("_______________________");
-        System.out.println("Preço uniário: R$" + precoUnitario);
+        System.out.println("Preço uniário: R$" + p.precoUnitario);
         System.out.println("_______________________");
         System.out.println("Preço total: R$" + precoTotal);
     }

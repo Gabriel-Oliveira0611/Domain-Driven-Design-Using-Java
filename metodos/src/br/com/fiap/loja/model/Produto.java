@@ -4,11 +4,10 @@ public class Produto {
 
     // Declaração das variáveis
     public String nome;
-    public int quantidade;
     public double precoUnitario;
 
     // Criação do método
-    public double calcularPrecoTotal() {
+    public double calcularPrecoTotal(int quantidade) {
         return quantidade * precoUnitario;
     }
 
