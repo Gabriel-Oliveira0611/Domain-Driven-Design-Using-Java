@@ -8,7 +8,9 @@ import br.com.fiap.financeiro.model.Endereco;
 
 public class Terminal {
 
-    static void main() {
+
+
+    public static void main(String[] args)  {
         // Criação da função de leitor
         Scanner leitor = new Scanner(System.in);
 
