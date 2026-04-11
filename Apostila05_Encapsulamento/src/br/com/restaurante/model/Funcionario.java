@@ -8,11 +8,25 @@ public class Funcionario {
     private double salario;
     private char sexo;
 
-    private double calcularPlr() {
+
+    public String retornarSalario() {
+        return formatarReal(salario);
+    }
+
+    public String retornarPlr() {
+        double plr = calcularPlr();
+        return formatarReal(plr);
+    }
+
+    private String formatarReal(double valor) {
+        return "R$" + valor;
+    }
+
+    public double calcularPlr() {
         return salario * 10;
     }
 
-    private void colocarEmFerias() {
+    public void colocarEmFerias() {
 
     }
 
