@@ -17,7 +17,6 @@ public class Lancha {
         this.quantidadeMotores = quantidadeMotores;
     }
 
-
     public String getModelo() {
         return modelo;
     }
