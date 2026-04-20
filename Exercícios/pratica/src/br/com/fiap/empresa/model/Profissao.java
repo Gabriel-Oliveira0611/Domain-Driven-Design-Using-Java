@@ -1,11 +1,19 @@
 package br.com.fiap.empresa.model;
 
 public class Profissao {
-    private String nome;
+    private String nomeProfissao;
 
     public Profissao() {}
 
-    public Profissao(String nome) {
-        this.nome = nome;
+    public Profissao(String nomeProfissao) {
+        this.nomeProfissao = nomeProfissao;
+    }
+
+    public String getNome() {
+        return nomeProfissao;
+    }
+
+    public void setNome(String nome) {
+        this.nomeProfissao = nomeProfissao;
     }
 }
