@@ -29,6 +29,10 @@ public class Terminal {
         System.out.println(profissao1.getNome());
 
         Funcionario funcionario1 = new Funcionario(matricula, nome, profissao1);
+        Funcionario funcionario2 = new Funcionario(
+                600,
+                "Gabriel",
+                new Profissao("Projetista"));
 
         funcionario1.exibirDados();
         System.out.println(funcionario1.exibirDados());
