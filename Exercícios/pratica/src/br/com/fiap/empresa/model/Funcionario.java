@@ -1,10 +1,14 @@
 package br.com.fiap.empresa.model;
 
 public class Funcionario {
+    // Atributos
+
     private String nome;
     private long matricula;
     private Profissao profissao;
     private double salario;
+
+    // Construtores
 
     public Funcionario() {}
 
@@ -24,12 +28,16 @@ public class Funcionario {
         this.profissao = profissao;
     }
 
+    // Métodos
+
     public String exibirDados() {
         return "\n -> Segue abaixo os dados: " +
                 "\n\n -> Nome: " + getNome() +
                 "\n -> Matricula: " + getMatricula() +
                 "\n -> Profissão: " + profissao.getNome();
     }
+
+    // Getters and setters
 
     public String getNome() {
         return nome;

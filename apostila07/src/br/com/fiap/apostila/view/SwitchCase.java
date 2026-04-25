@@ -15,17 +15,42 @@ public class SwitchCase {
         switch (operacao) {
             case "+":
                 resultado = primeiroNumero + segundoNumero;
-                JOptionPane.showMessageDialog(null, "resultado: " + resultado);
+                JOptionPane.showMessageDialog(
+                        null,
+                        "resultado: "
+                                + resultado);
                 break;
 
             case "-":
                 resultado = primeiroNumero - segundoNumero;
-                JOptionPane.showMessageDialog(null, "resultado: " + resultado);
+                JOptionPane.showMessageDialog(
+                        null,
+                        "resultado: " +
+                                resultado);
+                break;
+
+            case "*":
+                resultado = primeiroNumero * segundoNumero;
+                JOptionPane.showMessageDialog(
+                        null,
+                        "resultado: " +
+                                resultado);
                 break;
 
             case "/":
+                if (primeiroNumero == 0 || segundoNumero == 0 ) {
+                    JOptionPane.showMessageDialog(null, "Divisão por 0 não é permitida!");
+                }
+                else {
                 resultado = primeiroNumero / segundoNumero;
-                JOptionPane.showMessageDialog(null, "resultado: " + resultado);
+                JOptionPane.showMessageDialog(
+                        null,
+                        "resultado: " +
+                                resultado);
+                break; }
+
+            default:
+                JOptionPane.showMessageDialog(null, "Operação inválida!");
                 break;
 
         }

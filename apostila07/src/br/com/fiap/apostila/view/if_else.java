@@ -15,7 +15,7 @@ public class if_else {
         System.out.println("Insira a terceira nota");
         double nota3 = Double.parseDouble(JOptionPane.showInputDialog("Digite a terceira nota:"));
 
-        double mediaNota = 0;
+        double mediaNota;
         // Informar se está aprovado, retido ou de exame
         if (nota1 < nota2 && nota1 < nota3) {
             mediaNota = (nota2 + nota3) / 2;
