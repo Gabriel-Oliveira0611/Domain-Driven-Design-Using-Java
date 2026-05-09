@@ -3,15 +3,14 @@ package br.com.fiap.apostila08.view;
 import javax.swing.*;
 
 public class TesteString2 {
-    public static void main(String[] args) {
-        String email = JOptionPane.showInputDialog("Digite o email: ");
-        //Validar se o email é válido
+    static void main(String[] args) {
+        String email = JOptionPane.showInputDialog("Digite seu e-mail");
 
-
-        if (email.indexOf("@") == -1 && email.lastIndexOf(".") == -1) {
-            System.out.println("Email inválido");
+        //Validar email
+        if (email.contains("@") || email.contains(".")) {
+            System.out.println("Não é um email válido");
         } else {
-            System.out.println("Email válido");
+            System.out.println("É um e-mail válido.");
         }
     }
 }
