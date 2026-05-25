@@ -3,7 +3,7 @@ package br.com.fiap.loja.model;
 public class Produto {
 
     private String nome;
-    private double preco;
+    protected double preco;
     private String codigoBarra;
 
     public Produto(String nome, double preco, String codigoBarra) {
@@ -25,13 +25,19 @@ public class Produto {
             case "FIAP20":
                 return preco - preco * 0.2;
 
-
             case "FIAP30":
                 return preco - preco * 0.3;
 
             default:
                 return 0;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "-> Nome: " + nome +
+                "\n-> Preço: R$" + preco +
+                "\n-> Código de Barras: " + codigoBarra;
     }
 
     public String getNome() {
