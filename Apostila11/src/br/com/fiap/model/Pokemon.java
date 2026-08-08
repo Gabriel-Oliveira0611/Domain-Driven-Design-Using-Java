@@ -17,6 +17,13 @@ public class Pokemon {
         this.nivel = nivel;
     }
 
+    @Override
+    public String toString() {
+        return "-> Nome: " + nome + "\n" +
+                "-> Tipo: " + tipo + "\n" +
+                "-> Nível: " + nivel;
+    }
+
     public String getTipo() {
         return tipo;
     }

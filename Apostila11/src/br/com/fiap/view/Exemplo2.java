@@ -11,7 +11,7 @@ public class Exemplo2 {
         // Criar uma lista de Pokemon (pokedex)
         List<Pokemon> pokedex = new ArrayList<>();
 
-        // Adicionar 3 pokemons
+        // Crisação dos objetos
         Pokemon pikachu = new Pokemon(
                 "Elétrico",
                 "Pikachu",
@@ -30,17 +30,19 @@ public class Exemplo2 {
                 100
         );
 
-        pokedex.add(0, pikachu);
-        pokedex.add(1, charizard);
-        pokedex.add(2, mewTwo);
+        // Adição dos objetos na lista
+        pokedex.add( pikachu);
+        pokedex.add( charizard);
+        pokedex.add( mewTwo);
 
         // Exibir os dados dos pokemons
-        for (int i = 0; i < pokedex.size(); i++) {
-            System.out.println(
-                    "-> Nome: " + pokedex.get(i).getNome() + "\n" +
-                    "-> Tipo: " + pokedex.get(i).getTipo() + "\n" +
-                            "-> Nível: " + pokedex.get(i).getNivel() + "\n"
-            );
+//        for (int i = 0; i < pokedex.size(); i++) {
+//            System.out.println(pokedex.get(i).toString() + "\n");
+//        }
+
+//        Utilizando forEach
+        for (Pokemon index : pokedex) {
+            System.out.println(index);
         }
     }
 
