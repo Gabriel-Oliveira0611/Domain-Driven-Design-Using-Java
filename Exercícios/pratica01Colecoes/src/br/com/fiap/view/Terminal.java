@@ -54,8 +54,6 @@ public class Terminal {
                 8.5
         );
 
-//        Criação do map
-
         mapAlunos.put(aluno01.getRm(), aluno01);
         mapAlunos.put(aluno02.getRm(), aluno02);
         mapAlunos.put(aluno03.getRm(), aluno03);
