@@ -12,47 +12,42 @@ public class Terminal {
     static Map<Integer, Aluno> mapAlunos = new HashMap<>();
 
     static void main(String[] args) {
-//        Criaão dos objetos.
+        // Criaão dos objetos.
 
         Aluno aluno01 = new Aluno(
                 "Gabriel",
                 24,
                 572262,
                 9.0,
-                8.5
-        );
+                8.5);
 
         Aluno aluno02 = new Aluno(
                 "Roberto",
                 40,
                 572263,
                 9.5,
-                8.5
-        );
+                8.5);
 
         Aluno aluno03 = new Aluno(
                 "Júlia",
                 26,
                 572264,
                 8.7,
-                9.0
-        );
+                9.0);
 
         Aluno aluno04 = new Aluno(
                 "Carolina",
                 20,
                 572265,
                 9.5,
-                7.8
-        );
+                7.8);
 
         Aluno aluno05 = new Aluno(
                 "Carlos",
                 36,
                 572266,
                 9.6,
-                8.5
-        );
+                8.5);
 
         mapAlunos.put(aluno01.getRm(), aluno01);
         mapAlunos.put(aluno02.getRm(), aluno02);
@@ -81,24 +76,24 @@ public class Terminal {
                             "Selecione uma das opções abaixo:\n" +
                             "\n" +
                             "-> 1: Cadastrar aluno\n" +
-                            "-> 2: Prosseguir"
-            ));
+                            "-> 2: Prosseguir"));
 
             switch (option) {
                 case 1:
                     name = JOptionPane.showInputDialog(null, "Insira o nome do(a) aluno(a):");
                     age = Integer.parseInt(JOptionPane.showInputDialog(null, "Insira a idade do(a) aluno(a):"));
                     rm = Integer.parseInt(JOptionPane.showInputDialog(null, "Insira o rm do(a) aluno(a):"));
-                    nota1 = Double.parseDouble(JOptionPane.showInputDialog(null, "Insira a primeira nota do(a) aluno(a)"));
-                    nota2 = Double.parseDouble(JOptionPane.showInputDialog(null, "Insira a segunda nota do(a) aluno(a):"));
+                    nota1 = Double
+                            .parseDouble(JOptionPane.showInputDialog(null, "Insira a primeira nota do(a) aluno(a)"));
+                    nota2 = Double
+                            .parseDouble(JOptionPane.showInputDialog(null, "Insira a segunda nota do(a) aluno(a):"));
 
                     mapAlunos.put(rm, new Aluno(
                             name,
                             age,
                             rm,
                             nota1,
-                            nota2
-                    ));
+                            nota2));
                     break;
 
                 case 2:
@@ -131,8 +126,7 @@ public class Terminal {
                             "-> 2: Ver alunos que possuem média maior que 6.0.\n" +
                             "-> 3: Ver alunos que tem idade acima de 30 anos.\n" +
                             "-> 4: Excluir alunos com médias menores que 3.0.\n" +
-                            "-> 5: Sair do sistema."
-            ));
+                            "-> 5: Sair do sistema."));
 
             switch (option) {
                 case 1:
@@ -224,7 +218,6 @@ public class Terminal {
             name = mapAlunos.get(aluno).getName();
             double media = (mapAlunos.get(aluno).getNota1() + mapAlunos.get(aluno).getNota2()) / 2;
 
-
             resultado += "Nome: " + name + ". média: " + media + "\n";
         }
 
@@ -252,7 +245,8 @@ public class Terminal {
 
         for (Integer aluno : mapAlunos.keySet()) {
             if (mapAlunos.get(aluno).getAge() > 30) {
-                resultado += "-> " + mapAlunos.get(aluno).getName() + ". Idade: " + mapAlunos.get(aluno).getAge() + "\n";
+                resultado += "-> " + mapAlunos.get(aluno).getName() + ". Idade: " + mapAlunos.get(aluno).getAge()
+                        + "\n";
             }
         }
 
