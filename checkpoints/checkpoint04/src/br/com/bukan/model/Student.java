@@ -29,4 +29,28 @@ public class Student extends Member {
         this.monthlyPlan = monthlyPlan;
         this.activeRegistration = activeRegistration;
     }
+
+    public String getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(String registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public String getMonthlyPlan() {
+        return monthlyPlan;
+    }
+
+    public void setMonthlyPlan(String monthlyPlan) {
+        this.monthlyPlan = monthlyPlan;
+    }
+
+    public boolean isActiveRegistration() {
+        return activeRegistration;
+    }
+
+    public void setActiveRegistration(boolean activeRegistration) {
+        this.activeRegistration = activeRegistration;
+    }
 }

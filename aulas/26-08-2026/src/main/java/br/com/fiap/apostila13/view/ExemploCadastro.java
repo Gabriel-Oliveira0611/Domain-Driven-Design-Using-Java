@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class ExemploCadastro {
 
-    static void main(String[] args) throws SQLException, ClassNotFoundException {
+    static void main(String[] args){
 //        Ler os dados do produto
         int codigo = Integer.parseInt(JOptionPane.showInputDialog(
                         "Insira abaixo o código do produto:"
@@ -36,11 +36,17 @@ public class ExemploCadastro {
                 temEstoque
         );
 
-//        Instanciar um ProdutoDao
-        ProdutoDao dao = new ProdutoDao();
+        try {
+            //        Instanciar um ProdutoDao
+            ProdutoDao dao = new ProdutoDao();
 
-//        Chamar o método de cadastro
-        dao.cadastrar(produto01);
-        System.out.println("Produto cadastrado com sucesso.");
+            dao.cadastrar(produto01);
+            System.out.println("Produto cadastrado com sucesso.");
+
+        } catch (Exception e) {
+            System.err.println("Erro: " + e.getMessage());
+        }
+
+
     }
 }

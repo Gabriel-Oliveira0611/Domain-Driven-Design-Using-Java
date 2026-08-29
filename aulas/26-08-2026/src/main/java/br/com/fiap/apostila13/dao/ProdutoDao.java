@@ -1,10 +1,12 @@
 package br.com.fiap.apostila13.dao;
 
+import br.com.fiap.apostila13.exception.EntidadeNaoEncontradaException;
 import br.com.fiap.apostila13.factory.ConnectionFactory;
 import br.com.fiap.apostila13.model.Produto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ProdutoDao {
@@ -29,6 +31,27 @@ public class ProdutoDao {
 
 //        Execura o comando SQL no banco
         stmt.executeUpdate();
+    }
+
+    public Produto buscar(int id) throws SQLException, EntidadeNaoEncontradaException {
+//        Criar o comando sql
+        PreparedStatement stmt = conexao.prepareStatement("select * from t_jdbc_produto where cd_produto = ?");
+        stmt.setInt(1, id);
+        ResultSet resultSet = stmt.executeQuery(); //Executa comandos de pesquisa
+
+//        Validar se existe um produto no resultado
+        if (!resultSet.next()) {
+            throw new EntidadeNaoEncontradaException("Produto não enconrado");
+        }
+
+//        Recuperar as informações do resultset
+        int codigo = resultSet.getInt("cd_produto");
+        String nome = resultSet.getString("nm_produto");
+        String descricao = resultSet.getString("ds_produto");
+        double valor = resultSet.getDouble("vl_produto");
+        boolean temEstoque = resultSet.getBoolean("st_estoque");
+
+        return new Produto(codigo, nome, descricao, valor, temEstoque);
     }
 
 }
