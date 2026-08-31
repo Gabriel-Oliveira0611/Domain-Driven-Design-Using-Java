@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AlunoDao {
 
@@ -58,14 +60,52 @@ public class AlunoDao {
         return new Aluno(id, nome, email, idade);
     }
 
-    public void Atualizar(Aluno aluno, String nomeNovo) throws SQLException {
-//        Criar comando SQL
+    public void update(Aluno aluno) throws SQLException {
+//        Criação do comando SQL
         PreparedStatement stmt = conexao.prepareStatement(
-                "update t_fiap_aluno set nome_aluno = ? where nome_aluno = ?"
+                "update t_fiap_aluno set nome_aluno = ?, email_aluno = ?, idade_aluno = ? where id_aluno = ?"
         );
+        stmt.setString(1, aluno.getNome());
+        stmt.setString(2, aluno.getEmail());
+        stmt.setInt(3, aluno.getIdade());
+        stmt.setInt(4, aluno.getId());
 
-//        Atribuir os valores dos parâmetros ao comando SQL
-        stmt.set
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+    public void delete(int idDelete) throws SQLException {
+//        Criação do comando SQL
+        PreparedStatement stmt = conexao.prepareStatement(
+                "delete from t_fiap_aluno where id_aluno = ?"
+        );
+        stmt.setInt(1, idDelete);
+
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+    public List<Aluno> listar() throws SQLException {
+//        Criação da lista
+        List<Aluno> alunos = new ArrayList<>();
+
+//        Criação do comando SQL
+        PreparedStatement stmt = conexao.prepareStatement(
+                "select * from t_fiap_aluno"
+        );
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            int id = rs.getInt("id_aluno");
+            String nome = rs.getString("nome_aluno");
+            String email = rs.getString("email_aluno");
+            int idade = rs.getInt("idade_aluno");
+
+            alunos.add(new Aluno(id, nome, email, idade));
+        }
+
+        return alunos;
+
     }
 
 
