@@ -1,0 +1,15 @@
+1- Criar o projeto Maven
+2- Adicionar a dependência do driver Oracle no Projeto
+ 
+3- Criar a classe ConnectionFactory 
+	br.com.empresa.projeto.factory
+ 
+4- Criar a classe Model (que representa a tabela)
+	br.com.empresa.projeto.model
+ 
+5- Criar a classe Dao
+	br.com.empresa.projeto.dao
+	- Criar os métodos do CRUD
+		-Cria o PreparedStatement (comando SQL)		
+6- Criar a classe View (para testar)
+	br.com.empresa.projeto.view

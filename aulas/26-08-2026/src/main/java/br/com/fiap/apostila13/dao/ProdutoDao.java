@@ -41,7 +41,7 @@ public class ProdutoDao {
 
 //        Validar se existe um produto no resultado
         if (!resultSet.next()) {
-            throw new EntidadeNaoEncontradaException("Produto não enconrado");
+            throw new EntidadeNaoEncontradaException("Produto não encontrado");
         }
 
 //        Recuperar as informações do resultset
