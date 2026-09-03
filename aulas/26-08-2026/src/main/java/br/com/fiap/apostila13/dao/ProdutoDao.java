@@ -37,7 +37,8 @@ public class ProdutoDao {
 
     public Produto buscar(int id) throws SQLException, EntidadeNaoEncontradaException {
 //        Criar o comando sql
-        PreparedStatement stmt = conexao.prepareStatement("select * from t_jdbc_produto where cd_produto = ?");
+        PreparedStatement stmt = conexao.prepareStatement(
+                "select * from t_jdbc_produto where cd_produto = ?");
         stmt.setInt(1, id);
         ResultSet resultSet = stmt.executeQuery(); //Executa comandos de pesquisa
 
@@ -119,7 +120,5 @@ public class ProdutoDao {
         stmt.close();
         return lista;
     }
-
-
 
 }
