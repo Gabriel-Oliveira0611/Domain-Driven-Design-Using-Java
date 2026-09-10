@@ -25,6 +25,18 @@ public class Produto {
         this.temEstoque = temEstoque;
     }
 
+    public Produto(String nome, String descricao, double valor, boolean temEstoque) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.valor = valor;
+        this.temEstoque = temEstoque;
+    }
+
+    @Override
+    public String toString() {
+        return codigo + ", " + nome + ", " + descricao + ", " + valor + ", " + temEstoque;
+    }
+
     public int getCodigo() {
         return codigo;
     }

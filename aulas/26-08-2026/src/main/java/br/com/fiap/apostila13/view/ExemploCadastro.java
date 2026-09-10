@@ -10,10 +10,7 @@ public class ExemploCadastro {
 
     static void main(String[] args){
 //        Ler os dados do produto
-        int codigo = Integer.parseInt(JOptionPane.showInputDialog(
-                        "Insira abaixo o código do produto:"
-                )
-        );
+
         String nome = JOptionPane.showInputDialog(
                 "Insira abaixo o nome do produto:"
         );
@@ -29,7 +26,6 @@ public class ExemploCadastro {
 
 //        Instanciar um Produto com os dados
         Produto produto01 = new Produto(
-                codigo,
                 nome,
                 descricao,
                 valor,
@@ -42,6 +38,7 @@ public class ExemploCadastro {
 
             dao.cadastrar(produto01);
             System.out.println("Produto cadastrado com sucesso.");
+            System.out.println(produto01);
 
         } catch (Exception e) {
             System.err.println("Erro: " + e.getMessage());
