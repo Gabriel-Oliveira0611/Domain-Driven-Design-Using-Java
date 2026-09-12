@@ -16,7 +16,7 @@ public class TesteListar {
             List<Produto> lista = dao.listar();
 
             for (Produto produto : lista) {
-                System.out.println(produto.getNome());
+                System.out.println(produto.getNome() + " - Preço: R$" + produto.getValor());
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());

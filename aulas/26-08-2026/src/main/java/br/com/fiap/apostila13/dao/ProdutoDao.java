@@ -136,11 +136,7 @@ public class ProdutoDao {
 
         ResultSet resultSet = stmt.executeQuery();
 
-        if (!resultSet.next()) {
-            throw new EntidadeNaoEncontradaException("Nenhum produto com esse valor.");
-        }
-
-        List listaValores = new ArrayList<>();
+        List<Produto> listaValores = new ArrayList<>();
         while (resultSet.next()) {
             listaValores.add(getProduto(resultSet));
         }
