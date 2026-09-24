@@ -34,4 +34,20 @@ public class ImovelDao {
             }
         }
     }
+
+    public Imovel buscar(int id) {
+        String sql = "select * from t_api_imovel where cd_imovel = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+            stmt.setInt(1,id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Imovel imovel = new Imovel();
+                imovel.setCodigo(id);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
