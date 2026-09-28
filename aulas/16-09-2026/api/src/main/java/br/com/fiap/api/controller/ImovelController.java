@@ -23,6 +23,12 @@ public class ImovelController {
         return "Hello world!";
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Imovel> buscarImovel(@PathVariable int id) throws SQLException {
+        Imovel imovel = dao.buscarImovel(id);
+        return ResponseEntity.ok(imovel);
+    }
+
     @PostMapping
     public ResponseEntity<Imovel>inserir(@RequestBody Imovel imovel,
                                            UriComponentsBuilder uriBuilder) throws SQLException {
