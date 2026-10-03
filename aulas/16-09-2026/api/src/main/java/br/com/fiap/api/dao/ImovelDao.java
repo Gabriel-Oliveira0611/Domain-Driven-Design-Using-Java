@@ -1,5 +1,6 @@
 package br.com.fiap.api.dao;
 
+import br.com.fiap.api.exception.EntidadeNaoEncontradaException;
 import br.com.fiap.api.model.Imovel;
 import org.springframework.stereotype.Repository;
 
@@ -95,15 +96,17 @@ public class ImovelDao {
         }
     }
 
-    public void deletarImovel(int id) throws SQLException {
+    public void deletarImovel(int id) throws SQLException, EntidadeNaoEncontradaException {
         String sql = "delete from T_API_IMOVEL where cd_imovel = ?";
         try (
                 Connection conn = dataSource.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)
         ) {
             stmt.setInt(1, id);
-
-            stmt.executeUpdate();
+            int linhas = stmt.executeUpdate();
+            if ( linhas == 0) {
+                throw new EntidadeNaoEncontradaException("Nenhum registro foi apagado.");
+            }
         }
     }
 
