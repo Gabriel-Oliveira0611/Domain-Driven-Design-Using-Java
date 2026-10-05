@@ -1,0 +1,1 @@
+create sequence sq_t_api_aluno start with 1 increment by 1 nocycle;

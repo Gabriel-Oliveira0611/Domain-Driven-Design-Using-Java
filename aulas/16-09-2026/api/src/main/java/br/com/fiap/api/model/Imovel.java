@@ -5,8 +5,17 @@ public class Imovel {
     private String descricao;
     private int dimensao;
     private double valor;
+    private TipoImovel tipoImovel;
 
     public Imovel() {
+    }
+
+    public Imovel(int codigo, String descricao, int dimensao, double valor, TipoImovel tipoImovel) {
+        this.codigo = codigo;
+        this.descricao = descricao;
+        this.dimensao = dimensao;
+        this.valor = valor;
+        this.tipoImovel = tipoImovel;
     }
 
     public Imovel(int codigo, String descricao, int dimensao, double valor) {
