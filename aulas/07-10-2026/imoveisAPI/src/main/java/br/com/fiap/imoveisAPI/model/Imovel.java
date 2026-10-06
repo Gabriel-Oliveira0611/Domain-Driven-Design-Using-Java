@@ -28,6 +28,9 @@ public class Imovel {
         this.tipo = tipo;
     }
 
+    public Imovel() {
+    }
+
     public int getId() {
         return id;
     }

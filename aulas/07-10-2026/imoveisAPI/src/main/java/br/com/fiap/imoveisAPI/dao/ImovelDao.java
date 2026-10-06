@@ -23,7 +23,7 @@ public class ImovelDao {
     }
 
     //    Comandos SQL
-    private static final String SQL_INSERT = "insert into t_api_imovel (cd_imovel, ds_imovel, nr_dimensao, vl_imovel, t_api_imovel.cd_tipo) values (sq_t_api_imovel.nextval, ?, ?, ?, ?)";
+    private static final String SQL_INSERT = "insert into t_api_imovel (cd_imovel, ds_imovel, nr_dimensao, vl_imovel, cd_tipo) values (sq_t_api_imovel.nextval, ?, ?, ?, ?)";
     private static final String SQL_SELECT = "select * from t_api_imovel";
     private static final String SQL_SELECT_BY_ID = "select * from t_api_imovel where cd_imovel = ?";
     private static final String SQL_UPDATE = "update t_api_imovel set ds_imovel = ?, nr_dimensao = ?, vl_imovel = ?, cd_tipo = ? where cd_imovel = ?";
@@ -55,23 +55,25 @@ public class ImovelDao {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(SQL_SELECT);
-                ResultSet resultSet = statement.executeQuery()
+                ResultSet resultSet = statement.executeQuery();
         ) {
+            resultSet.previous();
             List<Imovel> imoveis = new ArrayList<>();
             while (resultSet.next()) {
+
                 TipoImovel tipo = new TipoImovel(
                         resultSet.getInt(5)
                 );
 
-                imoveis.add(
-                        new Imovel(
-                                resultSet.getInt(1),
-                                resultSet.getString(2),
-                                resultSet.getDouble(3),
-                                resultSet.getDouble(4),
-                                tipo
-                        )
+                Imovel imovel = new Imovel(
+                        resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getDouble(3),
+                        resultSet.getDouble(4),
+                        tipo
                 );
+
+                imoveis.add(imovel);
             }
 
             return imoveis;
@@ -107,12 +109,12 @@ public class ImovelDao {
         }
     }
 
-//    Update
+    //    Update
     public void update(Imovel imovel, int id) throws SQLException, RegistroNaoEncontradoException {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(SQL_UPDATE)
-                ){
+        ) {
             statement.setString(1, imovel.getDescricao());
             statement.setDouble(2, imovel.getDimensao());
             statement.setDouble(3, imovel.getValor());
@@ -133,7 +135,7 @@ public class ImovelDao {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(SQL_DELETE)
-                ){
+        ) {
             statement.setInt(1, id);
             statement.executeUpdate();
 
