@@ -3,7 +3,6 @@ package br.com.fiap.imoveisAPI.controller;
 import br.com.fiap.imoveisAPI.dao.ImovelDao;
 import br.com.fiap.imoveisAPI.exception.RegistroNaoEncontradoException;
 import br.com.fiap.imoveisAPI.model.Imovel;
-import br.com.fiap.imoveisAPI.model.TipoImovel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;

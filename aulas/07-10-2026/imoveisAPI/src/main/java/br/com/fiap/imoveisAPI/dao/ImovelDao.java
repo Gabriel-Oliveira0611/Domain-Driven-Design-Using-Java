@@ -23,9 +23,38 @@ public class ImovelDao {
     }
 
     //    Comandos SQL
-    private static final String SQL_INSERT = "insert into t_api_imovel (cd_imovel, ds_imovel, nr_dimensao, vl_imovel, cd_tipo) values (sq_t_api_imovel.nextval, ?, ?, ?, ?)";
-    private static final String SQL_SELECT = "select * from t_api_imovel";
-    private static final String SQL_SELECT_BY_ID = "select * from t_api_imovel where cd_imovel = ?";
+    private static final String SQL_INSERT = """
+            insert into t_api_imovel
+            (cd_imovel,
+             ds_imovel,
+             nr_dimensao,
+             vl_imovel,
+             t_api_imovel.cd_tipo)
+            values (sq_t_api_imovel.nextval, ?, ?, ?, ?)""";
+
+    private static final String SQL_SELECT = """
+            select cd_imovel,
+                   ds_imovel,
+                   nr_dimensao,
+                   vl_imovel,
+                   t_api_tipo_imovel.cd_tipo,
+                   nm_tipo,
+                   dt_cadastro
+            from t_api_imovel
+                     inner join t_api_tipo_imovel on t_api_tipo_imovel.cd_tipo = t_api_imovel.cd_tipo""";
+
+    private static final String SQL_SELECT_BY_ID = """
+            select cd_imovel,
+                   ds_imovel,
+                   nr_dimensao,
+                   vl_imovel,
+                   t_api_tipo_imovel.cd_tipo,
+                   nm_tipo,
+                   dt_cadastro
+            from t_api_imovel
+                     inner join t_api_tipo_imovel on t_api_tipo_imovel.cd_tipo = t_api_imovel.cd_tipo
+            where cd_imovel = ?""";
+
     private static final String SQL_UPDATE = "update t_api_imovel set ds_imovel = ?, nr_dimensao = ?, vl_imovel = ?, cd_tipo = ? where cd_imovel = ?";
     private static final String SQL_DELETE = "delete from t_api_imovel where cd_imovel = ?";
 
@@ -55,28 +84,33 @@ public class ImovelDao {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(SQL_SELECT);
-                ResultSet resultSet = statement.executeQuery();
+                ResultSet resultSet = statement.executeQuery()
         ) {
-            resultSet.previous();
             List<Imovel> imoveis = new ArrayList<>();
             while (resultSet.next()) {
-
-                TipoImovel tipo = new TipoImovel(
-                        resultSet.getInt(5)
+                imoveis.add(
+                        new Imovel(
+                                resultSet.getInt(1),
+                                resultSet.getString(2),
+                                resultSet.getDouble(3),
+                                resultSet.getDouble(4),
+                                new TipoImovel(
+                                        resultSet.getInt(5),
+                                        resultSet.getString(6),
+                                        resultSet.getTimestamp(7).toLocalDateTime()
+                                )
+                        )
                 );
 
-                Imovel imovel = new Imovel(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getDouble(3),
-                        resultSet.getDouble(4),
-                        tipo
-                );
-
-                imoveis.add(imovel);
             }
 
-            return imoveis;
+            if (imoveis.isEmpty()) {
+                throw new RegistroNaoEncontradoException(
+                        "Não foi encontrado nenhum registro"
+                );
+            } else {
+                return imoveis;
+            }
         }
     }
 
@@ -89,23 +123,22 @@ public class ImovelDao {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                TipoImovel tipo = new TipoImovel(
-                        resultSet.getInt(5)
-                );
-
                 return new Imovel(
                         resultSet.getInt(1),
                         resultSet.getString(2),
                         resultSet.getDouble(3),
                         resultSet.getDouble(4),
-                        tipo
+                        new TipoImovel(
+                                resultSet.getInt(5),
+                                resultSet.getString(6),
+                                resultSet.getTimestamp(7).toLocalDateTime()
+                        )
                 );
             } else {
                 throw new RegistroNaoEncontradoException(
-                        "Nenhum registro contém esse ID."
+                        "Nenhum registro encontrado com esse ID."
                 );
             }
-
         }
     }
 
