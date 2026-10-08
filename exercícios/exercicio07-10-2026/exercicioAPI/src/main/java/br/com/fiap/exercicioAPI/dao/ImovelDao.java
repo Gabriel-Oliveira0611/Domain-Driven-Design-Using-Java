@@ -1,8 +1,8 @@
-package br.com.fiap.imoveisAPI.dao;
+package br.com.fiap.exercicioAPI.dao;
 
-import br.com.fiap.imoveisAPI.exception.RegistroNaoEncontradoException;
-import br.com.fiap.imoveisAPI.model.Imovel;
-import br.com.fiap.imoveisAPI.model.TipoImovel;
+import br.com.fiap.exercicioAPI.exception.RegistroNaoEncontradoException;
+import br.com.fiap.exercicioAPI.model.Imovel;
+import br.com.fiap.exercicioAPI.model.TipoImovel;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -22,54 +22,63 @@ public class ImovelDao {
         this.dataSource = dataSource;
     }
 
-    //    Comandos SQL
     private static final String SQL_INSERT = """
-            insert into t_api_imovel
-            (cd_imovel,
-             ds_imovel,
-             nr_dimensao,
-             vl_imovel,
-             t_api_imovel.cd_tipo)
-            values (sq_t_api_imovel.nextval, ?, ?, ?, ?)""";
+            insert into T_API_IMOVEL (CD_IMOVEL, DS_IMOVEL, NR_DIMENSAO, VL_IMOVEL, CD_TIPO)
+            values (SQ_T_API_IMOVEL.nextval, ?, ?, ?, ?)
+            """;
 
-    private static final String SQL_SELECT = """
-            select cd_imovel,
-                   ds_imovel,
-                   nr_dimensao,
-                   vl_imovel,
-                   t_api_tipo_imovel.cd_tipo,
-                   nm_tipo,
-                   dt_cadastro
-            from t_api_imovel
-                     inner join t_api_tipo_imovel on t_api_tipo_imovel.cd_tipo = t_api_imovel.cd_tipo""";
+    private static final String SQL_READ = """
+            select CD_IMOVEL,
+                   DS_IMOVEL,
+                   NR_DIMENSAO,
+                   VL_IMOVEL,
+                   T_API_IMOVEL.CD_TIPO,
+                   NM_TIPO,
+                   T_API_TIPO_IMOVEL.CD_TIPO
+            from T_API_IMOVEL
+                     inner join T_API_TIPO_IMOVEL on (T_API_TIPO_IMOVEL.CD_TIPO = T_API_IMOVEL.CD_TIPO)
+            """;
 
-    private static final String SQL_SELECT_BY_ID = """
-            select cd_imovel,
-                   ds_imovel,
-                   nr_dimensao,
-                   vl_imovel,
-                   t_api_tipo_imovel.cd_tipo,
-                   nm_tipo,
-                   dt_cadastro
-            from t_api_imovel
-                     inner join t_api_tipo_imovel on t_api_tipo_imovel.cd_tipo = t_api_imovel.cd_tipo
-            where cd_imovel = ?""";
+    private static final String SQL_READ_BY_ID = """
+            select CD_IMOVEL,
+                   DS_IMOVEL,
+                   NR_DIMENSAO,
+                   VL_IMOVEL,
+                   T_API_IMOVEL.CD_TIPO,
+                   NM_TIPO,
+                   T_API_TIPO_IMOVEL.CD_TIPO
+            from T_API_IMOVEL
+                     inner join T_API_TIPO_IMOVEL on (T_API_TIPO_IMOVEL.CD_TIPO = T_API_IMOVEL.CD_TIPO)
+            where CD_IMOVEL = ?
+            """;
 
-    private static final String SQL_UPDATE = "update t_api_imovel set ds_imovel = ?, nr_dimensao = ?, vl_imovel = ?, cd_tipo = ? where cd_imovel = ?";
-    private static final String SQL_DELETE = "delete from t_api_imovel where cd_imovel = ?";
+    private static final String SQL_UPDATE = """
+            update T_API_IMOVEL
+            set DS_IMOVEL   = ?,
+                NR_DIMENSAO = ?,
+                VL_IMOVEL   = ?,
+                CD_TIPO     = ?
+            where CD_IMOVEL = ?;
+            """;
 
-    //    Create
+    private static final String SQL_DELETE = """
+            delete
+            from T_API_IMOVEL
+            where CD_IMOVEL = ?;
+            """;
+
+//    Create
     public void create(Imovel imovel) throws SQLException {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(
                         SQL_INSERT, new String[]{"cd_imovel"}
                 )
-        ) {
+                ){
             statement.setString(1, imovel.getDescricao());
             statement.setDouble(2, imovel.getDimensao());
             statement.setDouble(3, imovel.getValor());
-            statement.setInt(4, imovel.getTipo().getCodigo());
+            statement.setInt(4, imovel.getTipoImovel().getId());
             statement.executeUpdate();
 
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -79,15 +88,17 @@ public class ImovelDao {
         }
     }
 
-    //    Read
+//    Read
     public List<Imovel> read() throws SQLException, RegistroNaoEncontradoException {
         try (
                 Connection connection = dataSource.getConnection();
-                PreparedStatement statement = connection.prepareStatement(SQL_SELECT);
+                PreparedStatement statement = connection.prepareStatement(SQL_READ);
                 ResultSet resultSet = statement.executeQuery()
-        ) {
+                ){
+
             List<Imovel> imoveis = new ArrayList<>();
             while (resultSet.next()) {
+
                 imoveis.add(
                         new Imovel(
                                 resultSet.getInt(1),
@@ -105,7 +116,7 @@ public class ImovelDao {
 
             if (imoveis.isEmpty()) {
                 throw new RegistroNaoEncontradoException(
-                        "Não foi encontrado nenhum registro"
+                        "Nenhum registro encontrado."
                 );
             } else {
                 return imoveis;
@@ -116,8 +127,8 @@ public class ImovelDao {
     public Imovel readById(int id) throws SQLException, RegistroNaoEncontradoException {
         try (
                 Connection connection = dataSource.getConnection();
-                PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BY_ID)
-        ) {
+                PreparedStatement statement = connection.prepareStatement(SQL_READ_BY_ID)
+                ){
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 
@@ -135,49 +146,51 @@ public class ImovelDao {
                 );
             } else {
                 throw new RegistroNaoEncontradoException(
-                        "Nenhum registro encontrado com esse ID."
+                        "Nenhum registro contém esse ID."
                 );
             }
         }
     }
 
-    //    Update
+//    Update
     public void update(Imovel imovel, int id) throws SQLException, RegistroNaoEncontradoException {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(SQL_UPDATE)
-        ) {
+                ){
             statement.setString(1, imovel.getDescricao());
             statement.setDouble(2, imovel.getDimensao());
             statement.setDouble(3, imovel.getValor());
-            statement.setInt(4, imovel.getTipo().getCodigo());
+            statement.setInt(4, imovel.getTipoImovel().getId());
             statement.setInt(5, id);
             statement.executeUpdate();
 
             int linhas = statement.getUpdateCount();
             if (linhas == 0) {
                 throw new RegistroNaoEncontradoException(
-                        "Não existe nenhum registro com esse ID."
+                        "Nenhum registro contém esse id."
                 );
             }
         }
     }
 
+//    Delete
     public void delete(int id) throws SQLException, RegistroNaoEncontradoException {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(SQL_DELETE)
-        ) {
+                ){
             statement.setInt(1, id);
             statement.executeUpdate();
 
             int linhas = statement.getUpdateCount();
-
             if (linhas == 0) {
                 throw new RegistroNaoEncontradoException(
-                        "Não existe nenhum registro com essee ID."
+                        "Nenhum registro contém esse ID."
                 );
             }
         }
     }
+
+
 }
